@@ -1,0 +1,180 @@
+html {
+  font-family: sans-serif;
+}
+
+body {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2em auto;
+  font: .9em/1.2 Arial, Helvetica, sans-serif;
+}
+
+/* Grid that contains all objects on the website */
+#maingrid {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+/* A wrapper that centers anything in it horizontally */
+.horizontalcenterwrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Container for the grid that contains the tiles */
+#tilecontainer {
+  display: inline-grid;
+  border: 2px solid black;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  margin-bottom: 20px;
+}
+
+/* Make text areas not resizeable */
+textarea {
+  resize: none;
+}
+
+/* The wrapper around the width height and x to make them look proper */
+#gridsizecontainer {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 6px;
+  padding-bottom: 20px;
+}
+
+/* The wrapper around the "x" in between the midth and height */
+.griditemsizecontainer {
+  display: flex;
+  align-items: center;
+  font-size: large;
+}
+
+/* Input for width and height */
+.sizeinput input[type="number"] {
+  width: 20px;
+  height: 30px;
+  font-size: large;
+  text-align: center;
+}
+
+/* Input box: Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Input box: Firefox */
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.tile {
+  border: 2px solid black;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.c-1 {background-color: #000000;}
+.c-1:hover {background-color: #1a1a1a;}
+
+.c0 {background-color: #FFFFFF;}
+.c0:hover {background-color: #ddd;}
+
+.c1 {background-color: #1100DF;}
+.c1:hover {background-color: #0B0094;}
+
+.c2 {background-color: #A12BDB;}
+.c2:hover {background-color: #721B9D;}
+
+.c3 {background-color: #FF48DE;}
+.c3:hover {background-color: #E000B8;}
+
+.c4 {background-color: #EE0E00;}
+.c4:hover {background-color: #BD0B00;}
+
+.c5 {background-color: #FF8C00;}
+.c5:hover {background-color: #C26A00;}
+
+.c6 {background-color: #FFDD00;}
+.c6:hover {background-color: #CCB100;}
+
+.c7 {background-color: #8DDC0D;}
+.c7:hover {background-color: #6FAD0A;}
+
+.c8 {background-color: #06F2ED;}
+.c8:hover {background-color: #04A9A6;}
+
+.c9 {background-color: #006861;}
+.c9:hover {background-color: #003330;}
+
+.c10 {background-color: #976739;}
+.c10:hover {background-color: #604224;}
+
+/* Help diamond */ 
+#helpdiamond {
+  background-image: url("images/help-diamond.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+}
+
+/* Image shown when help diamond is hovered */
+/* Set up this way to avoid flickering on first image hover */
+#helpdiamondhover {
+  background-image: url("images/help-diamond-hovered.png");
+  background-size: contain;
+  width: 50px;
+  height: 50px;
+}
+
+/* Help diamond hover */
+#helpdiamond:hover {
+  opacity: 0%;
+}
+
+/* Overlay over page to put the help information */
+#helparea {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Covers the whole page */
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* White box to put informational text on */
+#helpareatext {
+  position: fixed;
+  display: block;
+  width: 40%;
+  height: 94%;
+  top: 3%;
+  left: 30%;
+  right: 30%;
+  bottom: 3%;
+  background-color: #FFFFFF;
+  border: 3px solid #000000;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: default;
+}
+
+/* Change button formatting */
+button {
+  font-size: large;
+  padding: 10px 20px;
+  margin: 0px 40px;
+}
