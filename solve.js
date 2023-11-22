@@ -8,6 +8,19 @@ const movesToSolve = [];
 // Where output is written out to
 const outputBox = document.getElementById("output");
 
+// Holds a value to color dictionary
+var dict = {};
+dict[1] = "Blue";
+dict[2] = "Purple";
+dict[3] = "Pink";
+dict[4] = "Red";
+dict[5] = "Orange";
+dict[6] = "Yellow";
+dict[7] = "Lime";
+dict[8] = "Cyan";
+dict[9] = "Teal";
+dict[10] = "Brown";
+
 // Function called from the website button to start the solve process
 function startSolve() {
     outputBox.textContent = "solving";
@@ -145,12 +158,12 @@ function checkIfBlocksRemoved(y, x) {
 // Input coordinates y1, x1 to be swapped with y2, x2
 function executeMove(y1, x1, y2, x2) {
     // Add the move to the move list
-    movesToSolve.push([`${y1}, ${x1}`, `${y2}, ${x2}`]);
+    movesToSolve.push([`${y1},${x1} (${dict[puzzleBoard[y1][x1]]})`, `${y2},${x2} (${dict[puzzleBoard[y2][x2]]})`]);
     // Save the current board state
     const oldBoardState = JSON.parse(JSON.stringify(puzzleBoard));
 
     // Execute the move and recalculate the new puzzle board
-    tempValue = puzzleBoard[y1][x1];
+    let tempValue = puzzleBoard[y1][x1];
     puzzleBoard[y1][x1] = puzzleBoard[y2][x2];
     puzzleBoard[y2][x2] = tempValue;
     recalculateBoard();

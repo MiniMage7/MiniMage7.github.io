@@ -21,6 +21,10 @@ const helpArea = document.getElementById("helparea");
 document.getElementById("helpdiamond").addEventListener("click", showHelpArea);
 helpArea.addEventListener("click", hideHelpArea);
 
+// Coordinates checkbox and display
+document.getElementById("showCordToolTips").addEventListener("click", changeCoordinatesVisibility);
+const coordinateDisplay = document.getElementById("coordinatesbox");
+
 // Add clear button event
 document.getElementById("clear").addEventListener("click", clearGrid);
 
@@ -97,11 +101,27 @@ function getCNumber(tile) {
   return tile.className.replace("tile", "").replace("c", "").trim();
 }
 
+// Get the coordinates of a tile in a graph
+function getCoordinates(tile) {
+  const parent = tile.parentNode;
+  const siblings = parent.childNodes;
+  for (index = 0; index < siblings.length; index++) {
+    if (tile.isSameNode(siblings[index])) {
+      index--;
+      let y =  Math.floor(index / height);
+      let x = index % height;
+      return `${y},${x}`;
+    }
+  }
+}
+
 // If the mouse is down on a tile enter, treat it as a click
+// Also update the coodinates in the coordinate display
 function mouseEnterTile(e) {
   if (isMouseDown) {
     cChange(e);
   }
+  coordinateDisplay.textContent = `Coordinates: ${getCoordinates(e.target)}`; //
 }
 
 // Keeps track of if the mouse is being pressed
@@ -128,6 +148,7 @@ function clearGrid(e) {
   }
 }
 
+// Starts the match3 solve in solve.js
 function solveGrid(e) {
   startSolve();
 }
@@ -141,5 +162,14 @@ function showHelpArea(e) {
 function hideHelpArea(e) {
   if (e.target.id == "helparea") {
     helpArea.style.display = "none";
+  }
+}
+
+// Changes the visibility of coordinates in the top right
+function changeCoordinatesVisibility(e) {
+  if (e.target.checked) {
+    coordinateDisplay.style.visibility = "visible";
+  } else {
+    coordinateDisplay.style.visibility = "hidden";
   }
 }

@@ -4,7 +4,7 @@ html {
 
 body {
   width: 90%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 2em auto;
   font: .9em/1.2 Arial, Helvetica, sans-serif;
 }
@@ -12,7 +12,7 @@ body {
 /* Grid that contains all objects on the website */
 #maingrid {
   display: grid;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 3.5fr 1fr;
 }
 
 /* A wrapper that centers anything in it horizontally */
