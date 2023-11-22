@@ -178,3 +178,9 @@ button {
   padding: 10px 20px;
   margin: 0px 40px;
 }
+
+#credits {
+  display: flex;
+  padding-left: 100px;
+  margin-top: 130px;
+}

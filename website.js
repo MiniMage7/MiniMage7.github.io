@@ -40,13 +40,13 @@ function updateGridSize() {
   const maxSize = 15;
   if (widthBox.value > maxSize) {
     widthBox.value = maxSize;
-  } else if (widthBox.value < 0) {
-    widthBox.value = 0; 
+  } else if (widthBox.value < 1) {
+    widthBox.value = 1; 
   }
   if (heightBox.value > maxSize) {
     heightBox.value = maxSize;
-  } else if (heightBox.value < 0) {
-    heightBox.value = 0; 
+  } else if (heightBox.value < 1) {
+    heightBox.value = 1; 
   }
 
   width = Number(widthBox.value);
