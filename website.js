@@ -21,8 +21,7 @@ const helpArea = document.getElementById("helparea");
 document.getElementById("helpdiamond").addEventListener("click", showHelpArea);
 helpArea.addEventListener("click", hideHelpArea);
 
-// Coordinates checkbox and display
-document.getElementById("showCordToolTips").addEventListener("click", changeCoordinatesVisibility);
+// Coordinates display
 const coordinateDisplay = document.getElementById("coordinatesbox");
 
 // Add clear button event
@@ -162,14 +161,5 @@ function showHelpArea(e) {
 function hideHelpArea(e) {
   if (e.target.id == "helparea") {
     helpArea.style.display = "none";
-  }
-}
-
-// Changes the visibility of coordinates in the top right
-function changeCoordinatesVisibility(e) {
-  if (e.target.checked) {
-    coordinateDisplay.style.visibility = "visible";
-  } else {
-    coordinateDisplay.style.visibility = "hidden";
   }
 }
