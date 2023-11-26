@@ -30,6 +30,18 @@ document.getElementById("clear").addEventListener("click", clearGrid);
 // Add solve puzzle event
 document.getElementById("solve").addEventListener("click", solveGrid);
 
+// To handle if the website is stepping through the solution instead of drawing
+let inSolveMode = false;
+let currentStep = 0;
+
+// Next and pervious buttons for solve mode
+const previousButton = document.getElementById("previous");
+previousButton.addEventListener("click", previousBoardState);
+
+const nextButton = document.getElementById("next");
+nextButton.addEventListener("click", nextBoardState);
+
+
 // When the grid size boxes are update, adds or removes tiles as needed
 function updateGridSize() {
   let oldWidth = width;
@@ -75,8 +87,13 @@ function updateGridSize() {
 
 // Changed the class up or down 1 on user click
 function cChange(e) {
+  // If the website is in solve mode, don't allow drawing
+  if (inSolveMode) {
+    return;
+  }
+
   let cNumber = Number(getCNumber(e.target));
-  let newCNumber = cNumber;
+  let newCNumber;
 
   // If shift is being held go down
   if (e.shiftKey) {
@@ -135,6 +152,11 @@ function mouseUp(e) {
 
 // Makes all the tiles white (c0)
 function clearGrid(e) {
+  // If the website is in solve mode, disable it
+  if (inSolveMode) {
+    disableSolveMode();
+  }
+
   let tiles = tileContainer.getElementsByClassName("tile");
 
   // For each tile
@@ -147,9 +169,15 @@ function clearGrid(e) {
   }
 }
 
-// Starts the match3 solve in solve.js
+// If the website is in solve mode, disable it
+// Otherwise, starts the match3 solve in solve.js
 function solveGrid(e) {
-  startSolve();
+  if (inSolveMode) {
+    disableSolveMode();
+  }
+  else {
+    startSolve();
+  }
 }
 
 // Shows the help rules
@@ -161,5 +189,122 @@ function showHelpArea(e) {
 function hideHelpArea(e) {
   if (e.target.id == "helparea") {
     helpArea.style.display = "none";
+  }
+}
+
+// Enables solve mode and buttons that interact with it
+function enableSolveMode() {
+  inSolveMode = true;
+
+  // Reset the current spot in the step through
+  currentStep = 0;
+
+  // Disable the ability to change the grid size
+  widthBox.disabled = "disabled";
+  heightBox.disabled = "disabled";
+
+  // Make the next and previous buttons visible
+  previousButton.style.visibility = "visible";
+  nextButton.style.visibility = "visible";
+
+  // Enable the next button and disable the previous one
+  previousButton.disabled = "disabled";
+  nextButton.removeAttribute("disabled");
+
+  // Update board state to highlight next move
+  updateBoardState();
+}
+
+// Disables solve modes and buttons that interact with it
+function disableSolveMode() {
+  inSolveMode = false;
+
+  // Remove move highlight
+  highlightMove("solid");
+
+  // Enable the ability to change the grid size
+  widthBox.removeAttribute("disabled");
+  heightBox.removeAttribute("disabled");
+
+  // Make the next and previous buttons hidden
+  previousButton.style.visibility = "hidden";
+  nextButton.style.visibility = "hidden";
+}
+
+// Handles moving to the next step in the solution
+function nextBoardState() {
+  // If there isn't a next step, return
+  if (currentStep + 1 >= storedBoards.length) {
+    return;
+  }
+
+  // Disable currently highlighted move
+  highlightMove("solid");
+
+  // Increment current step
+  currentStep++;
+
+  // Enable the previous button (in case its disabled)
+  previousButton.removeAttribute("disabled");
+  // Check to see if the next button should be disabled
+  if (currentStep + 1 >= storedBoards.length) {
+    nextButton.disabled = "disabled";
+  }
+
+  // Update to the next board state
+  updateBoardState();
+}
+
+// Handles moving to the previous step in the solution
+function previousBoardState() {
+  // If there isn't a previous step, return
+  if (currentStep - 1 < 0) {
+    return;
+  }
+
+  // Disable currently highlighted move
+  highlightMove("solid");
+
+  // Decrement current step
+  currentStep--;
+
+  // Enable the next button (in case its disabled)
+  nextButton.removeAttribute("disabled");
+  // Check to see if the previous button should be disabled
+  if (currentStep - 1 < 0) {
+    previousButton.disabled = "disabled";
+  }
+
+  // Update to the next board state
+  updateBoardState();
+}
+
+// Updates to the next requested step of the solution
+function updateBoardState() {
+  const tiles = tileContainer.getElementsByClassName("tile");
+
+  // For each tile
+  for (let index = 0; index < tiles.length; index++) {
+    const tile = tiles[index];
+    // Get the tiles c number
+    let cNumber = Number(getCNumber(tile));
+    // Replace its c class with the c Number from the stored board state
+    let newCNumber = storedBoards[currentStep][Math.floor(index / width)][index % width];
+    tile.classList.replace("c" + cNumber, "c" + newCNumber);
+  }
+
+  highlightMove("dotted");
+}
+
+// Changes the currently selected move to the passed highlight
+// Dotted to enable, solid to disable highlighted move
+function highlightMove(style) {
+  const tiles = tileContainer.getElementsByClassName("tile");
+
+  // If it isnt the last board state, show the next move to make
+  if (movesToSolve.length > currentStep) {
+    let nextMove = movesToSolve[currentStep];
+    tiles[Number(nextMove[0][0]) * width + Number(nextMove[0][1])].style.borderStyle = style;
+    tiles[Number(nextMove[1][0]) * width + Number(nextMove[1][1])].style.borderStyle = style;
   }
 }

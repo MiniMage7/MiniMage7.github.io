@@ -34,9 +34,10 @@ body {
   margin-bottom: 20px;
 }
 
-/* Make text areas not resizeable */
+/* Make text areas not resizeable and have same margin as grid */
 textarea {
   resize: none;
+  margin-bottom: 20px;
 }
 
 /* The wrapper around the width height and x to make them look proper */
@@ -169,6 +170,7 @@ input[type=number] {
   border: 3px solid #000000;
   padding-left: 10px;
   padding-right: 10px;
+  font-size: small;
   cursor: default;
 }
 

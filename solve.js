@@ -4,6 +4,7 @@
 // Arrays used for solving
 const puzzleBoard = [];
 const movesToSolve = [];
+const storedBoards = [];
 
 // Where output is written out to
 const outputBox = document.getElementById("output");
@@ -36,6 +37,8 @@ function setUpBoard() {
     puzzleBoard.length = 0;
     // Empty the solution moves if it isn't already
     movesToSolve.length = 0;
+    // Empty the stored board states if they aren't already
+    storedBoards.length = 0;
 
     // Get all the tiles
     let tiles = tileContainer.getElementsByClassName("tile");
@@ -158,9 +161,11 @@ function checkIfBlocksRemoved(y, x) {
 // Input coordinates y1, x1 to be swapped with y2, x2
 function executeMove(y1, x1, y2, x2) {
     // Add the move to the move list
-    movesToSolve.push([`${y1},${x1} (${dict[puzzleBoard[y1][x1]]})`, `${y2},${x2} (${dict[puzzleBoard[y2][x2]]})`]);
+    movesToSolve.push([[y1, x1, dict[puzzleBoard[y1][x1]]], [y2, x2, dict[puzzleBoard[y2][x2]]]]);
     // Save the current board state
     const oldBoardState = JSON.parse(JSON.stringify(puzzleBoard));
+    // Add that board state to the saved boards
+    storedBoards.push(oldBoardState);
 
     // Execute the move and recalculate the new puzzle board
     let tempValue = puzzleBoard[y1][x1];
@@ -177,7 +182,8 @@ function executeMove(y1, x1, y2, x2) {
         puzzleBoard.push(oldBoardState[index]);
     }
     // And remove the move from the move list
-    movesToSolve.pop()
+    movesToSolve.pop();
+    storedBoards.pop();
 }
 
 // Check if there are any pieces that need to be removed and removes them
@@ -324,14 +330,20 @@ function checkForWin() {
 
     // If this line is reached, the puzzle is solved
     outputSolution();
+    // Add the empty board state to the stored boards
+    storedBoards.push(JSON.parse(JSON.stringify(puzzleBoard)));
+    // If the board is empty, don't enable solve mode
+    if (movesToSolve.length != 0) {
+        enableSolveMode();
+    }
     throw new Error("This is not an error. This is just to stop the solving process on success.");
 }
 
 function outputSolution() {
     let outputString = "The solution is:\n\n";
     for (let index = 0; index < movesToSolve.length; index++) {
-        outputString += `Swap: ${movesToSolve[index][0]} with ${movesToSolve[index][1]}\n`
+        outputString += `Swap: ${movesToSolve[index][0][0]},${movesToSolve[index][0][1]} (${movesToSolve[index][0][2]}) with ${movesToSolve[index][1][0]},${movesToSolve[index][1][1]} (${movesToSolve[index][0][2]})\n`;
     }
-    outputString += "\nClick the question mark in the top right for help on how to read the solution."
+    outputString += "\nClick the question mark in the top right for help on how to read the solution.";
     outputBox.textContent = outputString;
 }
