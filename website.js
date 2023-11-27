@@ -21,14 +21,12 @@ const helpArea = document.getElementById("helparea");
 document.getElementById("helpdiamond").addEventListener("click", showHelpArea);
 helpArea.addEventListener("click", hideHelpArea);
 
-// Coordinates display
-const coordinateDisplay = document.getElementById("coordinatesbox");
-
 // Add clear button event
 document.getElementById("clear").addEventListener("click", clearGrid);
 
 // Add solve puzzle event
-document.getElementById("solve").addEventListener("click", solveGrid);
+const solveButton = document.getElementById("solve");
+solveButton.addEventListener("click", solveGrid);
 
 // To handle if the website is stepping through the solution instead of drawing
 let inSolveMode = false;
@@ -41,6 +39,8 @@ previousButton.addEventListener("click", previousBoardState);
 const nextButton = document.getElementById("next");
 nextButton.addEventListener("click", nextBoardState);
 
+// Track if the solve button is disabled due to lack of solution
+let noSolution = false;
 
 // When the grid size boxes are update, adds or removes tiles as needed
 function updateGridSize() {
@@ -48,7 +48,7 @@ function updateGridSize() {
   let oldHeight = height;
 
   // Make sure the changed values are in acceptable ranges
-  const maxSize = 15;
+  const maxSize = 32;
   if (widthBox.value > maxSize) {
     widthBox.value = maxSize;
   } else if (widthBox.value < 1) {
@@ -92,6 +92,13 @@ function cChange(e) {
     return;
   }
 
+  // If the solve button is disabled, allow it to be pushed again
+  if (noSolution) {
+    noSolution = true;
+    solveButton.textContent = "Solve";
+    solveButton.removeAttribute("disabled");
+  }
+
   let cNumber = Number(getCNumber(e.target));
   let newCNumber;
 
@@ -117,27 +124,11 @@ function getCNumber(tile) {
   return tile.className.replace("tile", "").replace("c", "").trim();
 }
 
-// Get the coordinates of a tile in a graph
-function getCoordinates(tile) {
-  const parent = tile.parentNode;
-  const siblings = parent.childNodes;
-  for (index = 0; index < siblings.length; index++) {
-    if (tile.isSameNode(siblings[index])) {
-      index--;
-      let y =  Math.floor(index / height);
-      let x = index % height;
-      return `${y},${x}`;
-    }
-  }
-}
-
 // If the mouse is down on a tile enter, treat it as a click
-// Also update the coodinates in the coordinate display
 function mouseEnterTile(e) {
   if (isMouseDown) {
     cChange(e);
   }
-  coordinateDisplay.textContent = `Coordinates: ${getCoordinates(e.target)}`; //
 }
 
 // Keeps track of if the mouse is being pressed

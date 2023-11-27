@@ -15,20 +15,16 @@
         <h2>How to Use</h2>
         <h3>Input</h3>
 
-        <p>Change the width and height of the grid using the boxes above the grid. (1-15)</p>
+        <p>Change the width and height of the grid using the boxes above the grid. (1-32)</p>
         <p>Clicking a box changes the color of the box. Shift clicking cycles backwards.</p>
         <p>White boxes are empty space and black boxes are immovable blockers.</p>
         <p>All other colors are objects that will match 3 normally.</p>
 
         <h3>Output</h3>
-
-        <p>The output is a list of swaps that need to be performed.</p>
-        <p>The coordinates of the currently hovered tile is in the top right.</p>
-
-        <h3>Solve Mode</h3>
-        <p>When solve is pushed, the website is put into Solve Mode.</p>
-        <p>This allows for you to use the next and previous buttons to highlight the next move and board state.</p>
-        <p>Hitting the solve button again or the clear button exits Solve Mode.</p>
+        <p>Hitting the solve button puts the website into "Solve Mode".</p>
+        <p>Solve Mode lets you see each step of the process to solve the puzzle.</p>
+        <p>You can use the next and previous buttons to navigate the different solution steps.</p>
+        <p>Hitting the clear or solve buttons exits Solve Mode.</p>
 
         <h3>Other Information</h3>
 
@@ -50,13 +46,13 @@
       <div class="horizontalcenterwrapper" style="grid-row: 2; grid-column: 1/3;">
         <div id="gridsizecontainer">
           <div class="sizeinput">
-            <input type="number" min="1" max="15" value="8">
+            <input type="number" min="1" max="32" value="8">
           </div>
     
           <div class="griditemsizecontainer">x</div>
     
           <div class="sizeinput">
-            <input type="number" min="1" max="15" value="8">
+            <input type="number" min="1" max="32" value="8">
           </div>
         </div>
       </div>
@@ -71,27 +67,20 @@
         <button id="solve">Solve</button>
       </div>
 
-      <!-- This is placeholder... probably -->
-      <div class="horizontalcenterwrapper" style="grid-row: 4; grid-column: 2;">
-        <button id="previous" style="margin: 0px 20px; visibility: hidden;">Previous</button>
-        <button id="next" style="margin: 0px 20px; visibility: hidden;">Next</button>
+      <div class="horizontalcenterwrapper" style="grid-row: 5; grid-column: 1/3;">
+        <button id="previous" style="visibility: hidden;">Previous</button>
+        <button id="next" style="visibility: hidden;">Next</button>
       </div>
-
-      <label style="grid-row: 2; grid-column: 2; align-self: flex-end;">Output</label>
-
-      <textarea name="output" id="output" cols="20" readonly="readonly" style="grid-row: 3; grid-column: 2;"></textarea>
 
       <div id="helpdiamondhover" style="grid-row: 1; grid-column: 2; justify-self: right;"></div>
       <div id="helpdiamond" style="grid-row: 1; grid-column: 2; justify-self: right;"></div>
-
-      <div id="coordinatesbox" style="grid-row: 2; grid-column: 2;">Coordinates: 0,0</div>
     </div>
 
     <!-- Credits -->
     <div id="credits">
-      <pre>
-        Made by Winterveil  <a href="https://www.buymeacoffee.com/seasonsveil">Buy me a coffee</a>  <a href="https://github.com/MiniMage7/MiniMage7.github.io">Website and Project Files</a> 
-      </pre>
+      <div style="margin-right: 10px;">Made by Winterveil</div>
+      <a href="https://www.buymeacoffee.com/seasonsveil"  target="_blank" rel="noopener noreferrer" style="margin-right: 10px;">Buy me a coffee</a>
+      <a href="https://github.com/MiniMage7/MiniMage7.github.io"  target="_blank" rel="noopener noreferrer">Website and Project Files</a> 
     </div>
 
 

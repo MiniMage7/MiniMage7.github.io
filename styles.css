@@ -177,12 +177,19 @@ input[type=number] {
 /* Change button formatting */
 button {
   font-size: large;
-  padding: 10px 20px;
-  margin: 0px 40px;
+  width: 100px;
+  height: 40px;
+  margin: 5px 40px;
 }
 
 #credits {
   display: flex;
-  padding-left: 100px;
-  margin-top: 130px;
+  margin-top: 65px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Make links always blue */
+a {
+  color: blue;
 }

@@ -6,9 +6,6 @@ const puzzleBoard = [];
 const movesToSolve = [];
 const storedBoards = [];
 
-// Where output is written out to
-const outputBox = document.getElementById("output");
-
 // Holds a value to color dictionary
 var dict = {};
 dict[1] = "Blue";
@@ -24,11 +21,21 @@ dict[10] = "Brown";
 
 // Function called from the website button to start the solve process
 function startSolve() {
-    outputBox.textContent = "solving";
+    // Change the cursor to show there is something happening
+    document.body.style.cursor = "progress";
+    // Also disable the solve button
+    solveButton.disabled = "disabled";
+
     setUpBoard();
     solve();
+
     // If this is reached, there was no solution found
-    outputBox.textContent = "There is no solution.";
+
+    // Undo the cursor change
+    document.body.style.cursor = "default";
+    // Change the solve button to say no solution
+    solveButton.textContent = "Impossible";
+    noSolution = true;
 }
 
 // Sets the puzzleBoard and movesToSolve arrays up pre-solve
@@ -314,8 +321,7 @@ function calculateGravity() {
     }
 }
 
-// Checks if any values in the array are greater than 0
-// If there are none, the puzzle is solved and calls output solution
+// Check if the puzzle is solved and stopping the solve if it is
 function checkForWin() {
     // For each row in the grid
     for (let y = 0; y < height; y++) {
@@ -329,21 +335,19 @@ function checkForWin() {
     }
 
     // If this line is reached, the puzzle is solved
-    outputSolution();
+
     // Add the empty board state to the stored boards
     storedBoards.push(JSON.parse(JSON.stringify(puzzleBoard)));
-    // If the board is empty, don't enable solve mode
+
+    // Enables solve mode if the board isn't empty
     if (movesToSolve.length != 0) {
         enableSolveMode();
     }
-    throw new Error("This is not an error. This is just to stop the solving process on success.");
-}
 
-function outputSolution() {
-    let outputString = "The solution is:\n\n";
-    for (let index = 0; index < movesToSolve.length; index++) {
-        outputString += `Swap: ${movesToSolve[index][0][0]},${movesToSolve[index][0][1]} (${movesToSolve[index][0][2]}) with ${movesToSolve[index][1][0]},${movesToSolve[index][1][1]} (${movesToSolve[index][0][2]})\n`;
-    }
-    outputString += "\nClick the question mark in the top right for help on how to read the solution.";
-    outputBox.textContent = outputString;
+    // Remove the cursor change
+    document.body.style.cursor = "default";
+    // Enable the solve button again
+    solveButton.removeAttribute("disabled");
+
+    throw new Error("This is not an error. This is just to stop the solving process on success.");
 }
