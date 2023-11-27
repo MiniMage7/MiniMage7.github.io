@@ -211,7 +211,7 @@ function disableSolveMode() {
   inSolveMode = false;
 
   // Remove move highlight
-  highlightMove("solid");
+  highlightMove("0px");
 
   // Enable the ability to change the grid size
   widthBox.removeAttribute("disabled");
@@ -230,7 +230,7 @@ function nextBoardState() {
   }
 
   // Disable currently highlighted move
-  highlightMove("solid");
+  highlightMove("0px");
 
   // Increment current step
   currentStep++;
@@ -254,7 +254,7 @@ function previousBoardState() {
   }
 
   // Disable currently highlighted move
-  highlightMove("solid");
+  highlightMove("0px");
 
   // Decrement current step
   currentStep--;
@@ -284,18 +284,18 @@ function updateBoardState() {
     tile.classList.replace("c" + cNumber, "c" + newCNumber);
   }
 
-  highlightMove("dotted");
+  highlightMove("8px");
 }
 
 // Changes the currently selected move to the passed highlight
-// Dotted to enable, solid to disable highlighted move
-function highlightMove(style) {
-  const tiles = tileContainer.getElementsByClassName("tile");
-
+// 8px to highlight, 0px to remove highlight
+function highlightMove(radius) {
   // If it isnt the last board state, show the next move to make
   if (movesToSolve.length > currentStep) {
+    const tiles = tileContainer.getElementsByClassName("tile");
+    
     let nextMove = movesToSolve[currentStep];
-    tiles[Number(nextMove[0][0]) * width + Number(nextMove[0][1])].style.borderStyle = style;
-    tiles[Number(nextMove[1][0]) * width + Number(nextMove[1][1])].style.borderStyle = style;
+    tiles[Number(nextMove[0][0]) * width + Number(nextMove[0][1])].style.borderRadius = radius;
+    tiles[Number(nextMove[1][0]) * width + Number(nextMove[1][1])].style.borderRadius = radius;
   }
 }
