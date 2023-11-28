@@ -26,16 +26,18 @@ function startSolve() {
     // Also disable the solve button
     solveButton.disabled = "disabled";
 
-    setUpBoard();
-    solve();
+    window.setTimeout(function() {
+        setUpBoard();
+        solve();
 
-    // If this is reached, there was no solution found
+        // If this is reached, there was no solution found
 
-    // Undo the cursor change
-    document.body.style.cursor = "default";
-    // Change the solve button to say no solution
-    solveButton.textContent = "Impossible";
-    noSolution = true;
+        // Undo the cursor change
+        document.body.style.cursor = "default";
+        // Change the solve button to say no solution
+        solveButton.textContent = "Impossible";
+        noSolution = true;
+    }, 100);
 }
 
 // Sets the puzzleBoard and movesToSolve arrays up pre-solve
