@@ -58,7 +58,7 @@ function setUpBoard() {
         const tempRowOfTiles = [];
         for (let x = 0; x < width; x++) {
             // Add that tile's c value to the row of tiles
-            const tile = tiles[y * height + x];
+            const tile = tiles[y * width + x];
             let cNumber = Number(getCNumber(tile));
             tempRowOfTiles.push(cNumber);
         }
