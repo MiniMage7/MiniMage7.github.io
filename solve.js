@@ -37,7 +37,7 @@ function startSolve() {
         // Change the solve button to say no solution
         solveButton.textContent = "Impossible";
         noSolution = true;
-    }, 100);
+    }, 20);
 }
 
 // Sets the puzzleBoard and movesToSolve arrays up pre-solve
@@ -70,6 +70,7 @@ function setUpBoard() {
 // Recursive function that solves the puzzle
 function solve() {
     checkForWin();
+    if (checkForLoss()) {return;}
 
     // For each row in the grid
     for (let y = 0; y < height; y++) {
@@ -321,6 +322,34 @@ function calculateGravity() {
     if (didBlocksMove) {
         calculateGravity();
     }
+}
+
+// Checks one of the ways the puzzle could be impossible early
+// Checks to make sure there isn't exactly 1 or 2 of a color
+function checkForLoss() {
+    // Array for colors 1-10
+    // (There is a spot for 0 even though its unused to cut down on needed operations)
+    const colorCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    // For each row in the grid
+    for (let y = 0; y < height; y++) {
+        // For each column in the grid
+        for (let x = 0; x < width; x++) {
+            // If its a removeable piece
+            if (puzzleBoard[y][x] > 0) {
+                // If there is air below it
+                colorCounter[puzzleBoard[y][x]]++;
+            }
+        }
+    }
+
+    // Check to make sure none are 1 or 2
+    for (let i = 1; i <= 10; i++) {
+        if (colorCounter[i] == 1 || colorCounter[i] == 2) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Check if the puzzle is solved and stopping the solve if it is
