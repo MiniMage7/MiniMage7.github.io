@@ -17,6 +17,9 @@
 
         <p>Change the width and height of the grid using the boxes above the grid. (1-32)</p>
         <p>Clicking a box changes the color of the box. Shift clicking cycles backwards.</p>
+        <p>Alternatively, you may select a color from the Color Selector area.</p>
+        <p>The selected color will then be used when clicking on the grid instead of cycling.</p>
+        <p>Clicking again on the selected color will deselect it.</p>
         <p>White boxes are empty space and black boxes are immovable blockers.</p>
         <p>All other colors are objects that will match 3 normally.</p>
 
@@ -37,8 +40,7 @@
 
         <h3>Warning</h3>
 
-        <p>Your browser might tell you that the page isn't responding on hard puzzles.</p>
-        <p>The website will return a result eventually if you wait. The average solve time is less than a second.</p>
+        <p>Very large puzzles are sometimes unsolvable due to browser and static website limitations.</p>
       </div>
     </div>
 
@@ -75,9 +77,31 @@
         <button id="solve">Solve</button>
       </div>
 
+      <!-- Previous and Next Buttons -->
       <div class="horizontalcenterwrapper" style="grid-row: 5; grid-column: 1/3;">
         <button id="previous" style="visibility: hidden;">Previous</button>
         <button id="next" style="visibility: hidden;">Next</button>
+      </div>
+
+      <!-- Color Selector -->
+      <div class="horizontalcenterwrapper" style="grid-row: 6; grid-column: 1/3;">
+        <h3>Color Selector</h3>
+      </div>
+      <div class="horizontalcenterwrapper" style="grid-row: 7; grid-column: 1/3;">
+        <div id="colorselector" style="border: 2px solid black;">
+          <div class="tile c0"></div>
+          <div class="tile c1"></div>
+          <div class="tile c2"></div>
+          <div class="tile c3"></div>
+          <div class="tile c4"></div>
+          <div class="tile c5"></div>
+          <div class="tile c-1"></div>
+          <div class="tile c6"></div>
+          <div class="tile c7"></div>
+          <div class="tile c8"></div>
+          <div class="tile c9"></div>
+          <div class="tile c10"></div>
+        </div>
       </div>
 
       <div id="helpdiamondhover" style="grid-row: 1; grid-column: 2; justify-self: right;"></div>

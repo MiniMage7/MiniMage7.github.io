@@ -1,10 +1,12 @@
 // Initialize the grid
 const tileContainer = document.getElementById("tilecontainer");
 const gridSizeBoxes = document.getElementsByClassName("sizeinput");
+const colorSelector = document.getElementById("colorselector");
 const widthBox = gridSizeBoxes[0].children[0];
 const heightBox = gridSizeBoxes[1].children[0];
 let width = 0;
 let height = 0;
+let selectedColor = null;
 updateGridSize();
 
 // Give the input boxes event handlers
@@ -20,6 +22,9 @@ document.addEventListener("mouseup", mouseUp);
 const helpArea = document.getElementById("helparea");
 document.getElementById("helpdiamond").addEventListener("click", showHelpArea);
 helpArea.addEventListener("click", hideHelpArea);
+
+// Color selector events
+colorSelector.addEventListener("click", cSelect);
 
 // Add clear button event
 document.getElementById("clear").addEventListener("click", clearGrid);
@@ -41,6 +46,10 @@ nextButton.addEventListener("click", nextBoardState);
 
 // Track if the solve button is disabled due to lack of solution
 let noSolution = false;
+
+// Set color selector size
+colorSelector.style.gridTemplateColumns = "repeat(6, auto)";
+colorSelector.style.gridTemplateRows = "repeat(2, auto)";
 
 // When the grid size boxes are update, adds or removes tiles as needed
 function updateGridSize() {
@@ -86,6 +95,7 @@ function updateGridSize() {
 }
 
 // Changed the class up or down 1 on user click
+// Or use selected color if there is one
 function cChange(e) {
   // If the website is in solve mode, don't allow drawing
   if (inSolveMode) {
@@ -97,6 +107,11 @@ function cChange(e) {
     noSolution = true;
     solveButton.textContent = "Solve";
     solveButton.removeAttribute("disabled");
+  }
+
+  if (selectedColor !== null) {
+    e.target.classList.replace("c" + getCNumber(e.target), "c" + selectedColor);
+    return;
   }
 
   let cNumber = Number(getCNumber(e.target));
@@ -117,6 +132,34 @@ function cChange(e) {
   }
 
   e.target.classList.replace("c" + cNumber, "c" + newCNumber);
+}
+
+// Changes the selected color to the clicked color
+function cSelect(e) {
+  // If the clicked element isn't a color, return
+  if (!e.target.classList.contains("tile")) {
+    return;
+  }
+
+  // Remove selected state from all colors
+  let tiles = colorSelector.getElementsByClassName("tile");
+  for (let index = 0; index < tiles.length; index++) {
+    const tile = tiles[index];
+    tile.classList.toggle("selected", false);
+  }
+
+  let targetColor = Number(getCNumber(e.target));
+
+  // If the clicked element is the selected color, unselect it and return
+  if (selectedColor === targetColor) {
+    selectedColor = null;
+    return;
+  }
+  
+  selectedColor = targetColor;
+
+  // Add selected state to the clicked color
+  e.target.classList.toggle("selected", true);
 }
 
 // Returns the value of the current class
