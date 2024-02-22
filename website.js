@@ -137,7 +137,6 @@ function cChange(e) {
 
   e.target.classList.replace("c" + cNumber, "c" + newCNumber);
   drawGlyphByNum(newCNumber, e.target);
-  console.log(e.target.toString());
 }
 
 // Changes the selected color to the clicked color
