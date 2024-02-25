@@ -44,6 +44,13 @@ previousButton.addEventListener("click", previousBoardState);
 const nextButton = document.getElementById("next");
 nextButton.addEventListener("click", nextBoardState);
 
+// Export and import buttons
+const importButton = document.getElementById("import");
+importButton.addEventListener("click", importBoard);
+
+const exportButton = document.getElementById("export");
+exportButton.addEventListener("click", exportBoard);
+
 // Track if the solve button is disabled due to lack of solution
 let noSolution = false;
 
@@ -104,7 +111,7 @@ function cChange(e) {
 
   // If the solve button is disabled, allow it to be pushed again
   if (noSolution) {
-    noSolution = true;
+    noSolution = false;
     solveButton.textContent = "Solve";
     solveButton.removeAttribute("disabled");
   }
@@ -240,6 +247,12 @@ function enableSolveMode() {
   // Make the next and previous buttons visible
   previousButton.style.visibility = "visible";
   nextButton.style.visibility = "visible";
+  previousButton.style.zIndex = "1";
+  nextButton.style.zIndex = "1";
+
+  // Hides the Export and Import buttons
+  importButton.style.visibility = "hidden";
+  exportButton.style.visibility = "hidden";
 
   // Enable the next button and disable the previous one
   previousButton.disabled = "disabled";
@@ -263,6 +276,12 @@ function disableSolveMode() {
   // Make the next and previous buttons hidden
   previousButton.style.visibility = "hidden";
   nextButton.style.visibility = "hidden";
+  previousButton.style.zIndex = "0";
+  nextButton.style.zIndex = "0";
+
+  // Show the export and import buttons
+  importButton.style.visibility = "visible";
+  exportButton.style.visibility = "visible";
 }
 
 // Handles moving to the next step in the solution
@@ -341,4 +360,90 @@ function highlightMove(radius) {
     tiles[Number(nextMove[0][0]) * width + Number(nextMove[0][1])].style.borderRadius = radius;
     tiles[Number(nextMove[1][0]) * width + Number(nextMove[1][1])].style.borderRadius = radius;
   }
+}
+
+// Copies the board as a json onto the clipboard
+async function exportBoard() {
+  let outputJSONString = "{\n  \"height\": " + height + ",\n  \"width\": " + width + ",\n  \"board\": ";
+  
+  // Get all the tiles
+  let tiles = tileContainer.getElementsByClassName("tile");
+
+  // For each row in the grid
+  let boardString = "["
+  for (let y = 0; y < height; y++) {
+    // For each column in the grid
+    boardString += "[";
+    for (let x = 0; x < width; x++) {
+      // Add that tile's c value to the row of tiles
+      const tile = tiles[y * width + x];
+      let cNumber = Number(getCNumber(tile));
+      boardString += cNumber += ",";
+    }
+    boardString = boardString.substring(0, boardString.length - 1) + "], ";
+  }
+  boardString = boardString.substring(0, boardString.length - 2) + "]";
+  outputJSONString += boardString + "\n}";
+
+  // Copy the string to the clipboard
+  await navigator.clipboard.writeText(outputJSONString);
+
+  // Change the export button for a few seconds to show it copied
+  exportButton.textContent = "Copied";
+  exportButton.disabled = "disabled";
+  await sleep(3000)
+  exportButton.textContent = "Export";
+  exportButton.removeAttribute("disabled");
+}
+
+// Imports a json (string) from the clipboard and onto the board
+async function importBoard() {
+  // Read JSON from clipboard
+  let importJSONString;
+  try {
+    importJSONString = await navigator.clipboard.readText();
+  } catch (error) {
+    // I feel like there is something I'm missing because Firefox's documentation makes it look like I can do this
+    // but I can't figure it out. Would appreciate help.
+    alert("This broswer doesn't support copying from the clipboard.\nChrome and Edge are confirmed to work.");
+  }
+  
+  let importedBoard;
+
+  // Try to extract the data from the clipboard text
+  try {
+    importedJSON = JSON.parse(importJSONString);
+
+    heightBox.value = importedJSON.height;
+    widthBox.value = importedJSON.width;
+
+    importedBoard = importedJSON.board;
+  } catch {
+    importButton.textContent = "Invalid";
+    importButton.style.disabled = "disabled";
+    await sleep(3000);
+    importButton.textContent = "Import";
+    importButton.removeAttribute("disabled");
+    return;
+  }
+  
+  // Resize the grid
+  updateGridSize();
+
+  // Update all the tiles in the board
+  const tiles = tileContainer.getElementsByClassName("tile");
+
+  for (let index = 0; index < tiles.length; index++) {
+    const tile = tiles[index];
+    // Get the tiles c number
+    let cNumber = Number(getCNumber(tile));
+    // Replace its c class with the c Number from the stored board state
+    let newCNumber = importedBoard[Math.floor(index / width)][index % width];
+    tile.classList.replace("c" + cNumber, "c" + newCNumber);
+  }
+}
+
+// Sleeps for passed ms
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
