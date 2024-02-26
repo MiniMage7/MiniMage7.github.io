@@ -364,7 +364,7 @@ function highlightMove(radius) {
 
 // Copies the board as a json onto the clipboard
 async function exportBoard() {
-  let outputJSONString = "{\n  \"height\": " + height + ",\n  \"width\": " + width + ",\n  \"board\": ";
+  let outputJSONString = "{ \"height\": " + height + ", \"width\": " + width + ", \"board\": ";
   
   // Get all the tiles
   let tiles = tileContainer.getElementsByClassName("tile");
@@ -383,7 +383,7 @@ async function exportBoard() {
     boardString = boardString.substring(0, boardString.length - 1) + "], ";
   }
   boardString = boardString.substring(0, boardString.length - 2) + "]";
-  outputJSONString += boardString + "\n}";
+  outputJSONString += boardString + " }";
 
   // Copy the string to the clipboard
   await navigator.clipboard.writeText(outputJSONString);
