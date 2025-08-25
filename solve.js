@@ -11,13 +11,15 @@ var dict = {};
 dict[1] = "Blue";
 dict[2] = "Purple";
 dict[3] = "Pink";
-dict[4] = "Red";
-dict[5] = "Orange";
-dict[6] = "Yellow";
-dict[7] = "Lime";
-dict[8] = "Cyan";
-dict[9] = "Teal";
-dict[10] = "Brown";
+dict[4] = "Maroon";
+dict[5] = "Red";
+dict[6] = "Orange";
+dict[7] = "Yellow";
+dict[8] = "Green";
+dict[9] = "Lime";
+dict[10] = "Cyan";
+dict[11] = "Teal";
+dict[12] = "Brown";
 
 // Function called from the website button to start the solve process
 function startSolve() {
@@ -327,9 +329,9 @@ function calculateGravity() {
 // Checks one of the ways the puzzle could be impossible early
 // Checks to make sure there isn't exactly 1 or 2 of a color
 function checkForLoss() {
-    // Array for colors 1-10
+    // Array for colors 1-12
     // (There is a spot for 0 even though its unused to cut down on needed operations)
-    const colorCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const colorCounter = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     // For each row in the grid
     for (let y = 0; y < height; y++) {
@@ -344,7 +346,7 @@ function checkForLoss() {
     }
 
     // Check to make sure none are 1 or 2
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 12; i++) {
         if (colorCounter[i] == 1 || colorCounter[i] == 2) {
             return true;
         }

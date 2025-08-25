@@ -106,26 +106,32 @@ input[type=number] {
 .c3 {background-color: #FF48DE;}
 .c3:hover {background-color: #E000B8;}
 
-.c4 {background-color: #EE0E00;}
-.c4:hover {background-color: #BD0B00;}
+.c4 {background-color: #83001c;}
+.c4:hover {background-color: #5a0016;}
 
-.c5 {background-color: #FF8C00;}
-.c5:hover {background-color: #C26A00;}
+.c5 {background-color: #EE0E00;}
+.c5:hover {background-color: #BD0B00;}
 
-.c6 {background-color: #FFDD00;}
-.c6:hover {background-color: #CCB100;}
+.c6 {background-color: #FF8C00;}
+.c6:hover {background-color: #C26A00;}
 
-.c7 {background-color: #8DDC0D;}
-.c7:hover {background-color: #6FAD0A;}
+.c7 {background-color: #FFDD00;}
+.c7:hover {background-color: #CCB100;}
 
-.c8 {background-color: #06F2ED;}
-.c8:hover {background-color: #04A9A6;}
+.c8 {background-color: #145f00;}
+.c8:hover {background-color: #104500;}
 
-.c9 {background-color: #006861;}
-.c9:hover {background-color: #003330;}
+.c9 {background-color: #8DDC0D;}
+.c9:hover {background-color: #6FAD0A;}
 
-.c10 {background-color: #976739;}
-.c10:hover {background-color: #604224;}
+.c10 {background-color: #06F2ED;}
+.c10:hover {background-color: #04A9A6;}
+
+.c11 {background-color: #006861;}
+.c11:hover {background-color: #003330;}
+
+.c12 {background-color: #976739;}
+.c12:hover {background-color: #604224;}
 
 /* Help diamond */ 
 #helpdiamond {

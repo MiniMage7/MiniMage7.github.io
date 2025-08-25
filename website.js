@@ -55,7 +55,7 @@ exportButton.addEventListener("click", exportBoard);
 let noSolution = false;
 
 // Set color selector size
-colorSelector.style.gridTemplateColumns = "repeat(6, auto)";
+colorSelector.style.gridTemplateColumns = "repeat(7, auto)";
 colorSelector.style.gridTemplateRows = "repeat(2, auto)";
 
 // When the grid size boxes are update, adds or removes tiles as needed
@@ -128,12 +128,12 @@ function cChange(e) {
   if (e.shiftKey) {
     newCNumber = cNumber - 1;
     if (newCNumber < -1) {
-      newCNumber = 10;
+      newCNumber = 12;
     }
   } // Otherwise go up by 1
   else {
     newCNumber = cNumber + 1;
-    if (newCNumber > 10) {
+    if (newCNumber > 12) {
       newCNumber = -1;
     }
   }
@@ -352,7 +352,7 @@ function updateBoardState() {
 // Changes the currently selected move to the passed highlight
 // 8px to highlight, 0px to remove highlight
 function highlightMove(radius) {
-  // If it isnt the last board state, show the next move to make
+  // If it isn't the last board state, show the next move to make
   if (movesToSolve.length > currentStep) {
     const tiles = tileContainer.getElementsByClassName("tile");
     
@@ -405,7 +405,7 @@ async function importBoard() {
   } catch (error) {
     // I feel like there is something I'm missing because Firefox's documentation makes it look like I can do this
     // but I can't figure it out. Would appreciate help.
-    alert("This broswer doesn't support copying from the clipboard.\nChrome and Edge are confirmed to work.");
+    alert("This browser doesn't support copying from the clipboard.\nChrome and Edge are confirmed to work.");
   }
   
   let importedBoard;
